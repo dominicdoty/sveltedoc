@@ -4,6 +4,8 @@ This is an exploration of using HTML+CSS and browser "print to pdf" as a vehicle
 
 This has only been tested in Firefox.
 
+View a rendered version here: [sveltedoc.pages.dev](https://sveltedoc.pages.dev/)
+
 I've recently been using asciidoc to create formatted documents.
 While it is overall an excellent tool, I've found it lacking in a few ways, namely:
  * Slow rendering times when "compiling" to a PDF
