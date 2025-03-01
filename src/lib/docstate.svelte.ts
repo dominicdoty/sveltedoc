@@ -1,53 +1,58 @@
 type sectionEntry = { title: string; level: number };
 
 type finalSectionEntry = {
+  sectionId: number | null;
   title: string;
   level: number;
-  section_number: number[];
-  section_string: string;
+  sectionNumber: number[];
+  sectionString: string;
 };
 
 class SectionTracker {
-  #sections: Map<string, finalSectionEntry> = $state(new Map());
+  #sections: finalSectionEntry[] = $state([]);
+  #sectionPageNumbers: number[] = $state([]);
+  #qty = 0; // Used to count sectionId's
 
-  add(section: sectionEntry): finalSectionEntry {
-    if (this.#sections.has(section.title)) {
-      return this.#sections.get(section.title);
+  add(sectionId: number | null, section: sectionEntry): finalSectionEntry {
+    if (sectionId) {
+      console.log("repeat");
+      return this.#sections[sectionId];
     }
 
-    let new_section: finalSectionEntry;
+    let section_number: number[];
 
-    if (this.#sections.size == 0) {
-      let section_number = Array(section.level).fill(1);
+    if (this.#sections.length == 0) {
+      section_number = Array(section.level).fill(1);
       section_number.push(1);
-
-      new_section = {
-        ...section,
-        section_number: section_number,
-        section_string: section_number.join("."),
-      };
     } else {
-      const last_key = Array.from(this.#sections.keys()).slice(-1)[0];
-      const prev_sect = this.#sections.get(last_key);
-      let section_number = prev_sect.section_number.slice(0, section.level + 1);
+      const prev_sect = this.#sections.slice(-1)[0];
+      section_number = prev_sect.sectionNumber.slice(0, section.level + 1);
       section_number[section.level] += 1;
       section_number = Array.from(section_number);
       section_number = section_number.map((v) => (isNaN(v) ? 1 : v));
-
-      new_section = {
-        ...section,
-        section_number: section_number,
-        section_string: section_number.join("."),
-      };
     }
 
-    this.#sections.set(section.title, new_section);
+    let new_section: finalSectionEntry = {
+      ...section,
+      sectionId: this.#qty,
+      sectionNumber: section_number,
+      sectionString: section_number.join("."),
+    };
+
+    this.#sections.push(new_section);
+    this.#sectionPageNumbers.push(0);
+    this.#qty += 1;
     return new_section;
   }
 
-  get_sections(): finalSectionEntry[] {
-    return Array.from(this.#sections.values());
+  setSectionPageNumber(sectionIdx: number, pageNumber: number) {
+    this.#sectionPageNumbers[sectionIdx] = pageNumber;
   }
+
+  sections = $derived({
+    sections: Sections.#sections,
+    pageNumbers: this.#sectionPageNumbers,
+  });
 }
 
 export const Sections = new SectionTracker();

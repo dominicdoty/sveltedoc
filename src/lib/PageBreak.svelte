@@ -1,4 +1,4 @@
 <script lang="ts">
 </script>
 
-<p>page break</p>
+<span class="page-break"></span>

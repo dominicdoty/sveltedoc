@@ -1,26 +1,63 @@
 <script lang="ts">
-  import { Sections } from "./docstate.svelte";
-  let { title, level }: { title: string; level: number } = $props();
+  import { onMount } from "svelte";
+  import { Sections } from "$lib/docstate.svelte";
+  import { type finalSectionEntry } from "$lib/docstate.svelte";
 
-  let h_class = $state("");
-  $effect(() => {
+  let { level }: { level: number } = $props();
+
+  let hClass: string = $derived.by(() => {
     if (level == 0) {
-      h_class = "text-xl";
+      return "text-xl";
     } else if (level == 1) {
-      h_class = "text-lg";
+      return "text-lg";
     } else if (level == 2) {
-      h_class = "text-md";
+      return "text-md";
     } else if (level >= 3) {
-      h_class = "text-sm";
+      return "text-sm";
+    } else {
+      return "text-red-500";
     }
   });
 
-  const section = Sections.add({ title, level });
+  let titleSpan: HTMLSpanElement | undefined = $state();
+  let section: finalSectionEntry = $state.raw({
+    sectionId: null,
+    title: "",
+    level: 0,
+    sectionNumber: [],
+    sectionString: "",
+  });
+
+  let title: string = $derived.by(() => {
+    if (titleSpan && titleSpan?.textContent) {
+      return titleSpan.textContent;
+    } else {
+      return "";
+    }
+  });
+
+  let sectionString: string = $derived(section.sectionString);
+
+  onMount(() => {
+    section = Sections.add(section.sectionId, { title, level });
+  });
+
+  // TODO: Probably need to add some kind of a tag that we can detect
+  // in the exported PDF to allow us to generate section bookmarks in the PDF.
+  // Also need to figure out a way to add/resolve section links.
+  // This concept is probably expandable to figure captions/references/tables, etc.
 </script>
 
-<span>
-  <h1 class="font-bold py-2 {h_class}">
-    {section.section_string}
-    {section.title}
+<div
+  id={title}
+  data-sveltedoc-type="section"
+  data-sveltedoc-section-id={section.sectionId}
+>
+  <h1 class="font-bold py-2 {hClass}">
+    {sectionString}
+    <span bind:this={titleSpan}>
+      <slot />
+      <!-- Not sure there's a way around this with mdsvex as is -->
+    </span>
   </h1>
-</span>
+</div>

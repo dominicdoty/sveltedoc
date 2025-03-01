@@ -1,47 +1,50 @@
-# Svelte + TS + Vite
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+# About
+This is an exploration of using HTML+CSS and browser "print to pdf" as a vehicle for creating formatted PDFs.
 
-## Recommended IDE Setup
+This has only been tested in Firefox.
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+I've recently been using asciidoc to create formatted documents.
+While it is overall an excellent tool, I've found it lacking in a few ways, namely:
+ * Slow rendering times when "compiling" to a PDF
+ * Difficulty doing detailed, manual formatting (e.g. for title pages or other specialty pages)
+ * Differences between the common web based preview and the compiled PDF
 
-## Need an official Svelte framework?
+LATEX counters some of these shortcomings, but is difficult in other ways.
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+I decided to explore the possibility of using HTML+CSS to create a web page that was formatted like a document, and could be printed to a PDF with identical formatting.
+This is an attempt at this idea.
 
-## Technical considerations
+I chose to use Svelte since I'm familiar with it.
+Hopefully the combination of `mdsvex` (markdown->svelte transformer) and Svelte components would prove a potent combination of simplicity for typical editing use cases, and the full power of HTML+CSS layout when needed.
 
-**Why use this over SvelteKit?**
+I'm not convinced this is any better than LATEX or asciidoc, but it was an interesting exercise.
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+<br/>
+<br/>
+<br/>
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+## To Do
+There are several outstanding issues in this demo:
+ * Reactivity is broken
+    * The site does not currently HMR automatically or correctly when editing the `content.md` file.
+    * This is likely due to the hot mess of mixed Svelte 4 & 5 paradigms in here, and my own mistakes.
+ * Document content is held in a single `content.md` file at the moment
+    * This is something that could be solved by globbing all `*.md` files in the `doc` directory and rendering them in order of filenames.
+    * This should make it easier to edit large, multipart documents.
+ * The TitlePage and TableOfContents are both included in the `App.svelte` file
+    * It would be more user friendly to put those into the `doc` folder and have a top level app that auto renders them and all `*.md` files there also.
+ 
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
+ 
+ * Pagination problems 
+   * pagination code is gross
+   * Currently page breaks are automatically inserted based on height alone.
+ * Figure/Table Numbers/Captions and Table of Figures/Tables
+    * This is not yet implemented but should be possible by following the Section numbering model.
+ * Cross referencing to sections/figures/tables is not implemeneted
+    * Inter-page links (`href=#My Section`) work
+    * No current way to add auto filled section numbers or the like in text crossrefs
+ * PDF bookmarks
+    * Not implemented, but seems possible by inspecting the generate PDF and adding them in post processing.
+ 
