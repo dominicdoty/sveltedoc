@@ -1,79 +1,93 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "@fontsource/newsreader";
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@theme {
+    --default-font-family: 'Newsreader Variable', serif;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+    --rem-per-in: 5rem;
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+    --page-height: calc(var(--rem-per-in)*11);
+    --page-width: calc(var(--rem-per-in)*8.5);
+    --page-margin: calc(var(--rem-per-in)*1);
+    --page-top-margin: var(--page-margin);
+    --page-bottom-margin: var(--page-margin);
+    --page-left-margin: var(--page-margin);
+    --page-right-margin: var(--page-margin);
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+    --page-height-print: 11in;
+    --page-width-print: 8.5in;
+    --page-margin-print: 1in;
+    --page-top-margin-print: var(--page-margin-print);
+    --page-bottom-margin-print: var(--page-margin-print);
+    --page-left-margin-print: var(--page-margin-print);
+    --page-right-margin-print: var(--page-margin-print);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+@media print {
+    @page {
+        size: var(--page-width-print) var(--page-height-print);
+        margin-top: var(--page-top-margin-print);
+        margin-bottom: var(--page-bottom-margin-print);
+        margin-left: var(--page-left-margin-print);
+        margin-right: var(--page-right-margin-print);
+    }
+
+    html {
+        background-color: white;
+    }
+
+    .page-break {
+        break-after: page;
+    }
+
+    .page-width {
+        width: var(--page-width-print);
+    }
+
+    .page-height {
+        height: var(--page-height-print);
+    }
+
+    .header {
+        height: var(--page-top-margin-print);
+        width: 100%;
+    }
+
+    .footer {
+        height: var(--page-bottom-margin-print);
+        width: 100%;
+    }
+
+    .page-content {
+        width: 100%;
+        padding-left: var(--page-left-margin-print);
+        padding-right: var(--page-right-margin-print);
+    }
 }
 
-.card {
-  padding: 2em;
-}
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+@layer components {
+    .page-width {
+        width: var(--page-width);
+    }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+    .page-height {
+        height: var(--page-height);
+    }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+    .header {
+        height: var(--page-top-margin);
+        width: 100%;
+    }
+
+    .footer {
+        height: var(--page-bottom-margin);
+        width: 100%;
+    }
+
+    .page-content {
+        width: 100%;
+        padding-left: var(--page-left-margin);
+        padding-right: var(--page-right-margin);
+    }
 }
