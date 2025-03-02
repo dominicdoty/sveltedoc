@@ -11,7 +11,7 @@
     } else if (level == 1) {
       return "text-lg";
     } else if (level == 2) {
-      return "text-md";
+      return "text-base";
     } else if (level >= 3) {
       return "text-sm";
     } else {
@@ -53,7 +53,7 @@
   data-sveltedoc-type="section"
   data-sveltedoc-section-id={section.sectionId}
 >
-  <h1 class="font-bold py-2 {hClass}">
+  <h1 class="font-bold py-1 {hClass}">
     {sectionString}
     <span bind:this={titleSpan}>
       <slot />

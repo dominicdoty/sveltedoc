@@ -7,7 +7,9 @@
     <div class="h-full flex flex-col">
       <div class="text-center flex-none">
         <h1 class="text-2xl">Example Document</h1>
-        <h2 class="text-md italic">Exploring HTML to PDF Document Creation</h2>
+        <h2 class="text-base italic">
+          Exploring HTML to PDF Document Creation
+        </h2>
       </div>
 
       <div class="grow"></div>

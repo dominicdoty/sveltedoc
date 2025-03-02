@@ -15,11 +15,6 @@
   </Paginator>
 </div>
 
-<div
-  class="text-xs text-sm text-md text-lg text-xl text-2xl"
-  id="cssmule"
-></div>
-
 <style lang="postcss">
   @reference "tailwindcss/theme";
 </style>
