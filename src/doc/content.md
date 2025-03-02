@@ -3,6 +3,8 @@
 # About
 This is an exploration of using HTML+CSS and browser "print to pdf" as a vehicle for creating formatted PDFs.
 
+Read more about it on my website: [dominicdoty.com](https://www.dominicdoty.com/2025/03/02/sveltedoc/)
+
 Source is available: [https://www.github.com/dominicdoty/sveltedoc](https://www.github.com/dominicdoty/sveltedoc)
 
 This has only been tested in Firefox.

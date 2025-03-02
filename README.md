@@ -6,6 +6,8 @@ This has only been tested in Firefox.
 
 View a rendered version here: [sveltedoc.pages.dev](https://sveltedoc.pages.dev/)
 
+Read more about it on my website: [dominicdoty.com](https://www.dominicdoty.com/2025/03/02/sveltedoc/)
+
 I've recently been using asciidoc to create formatted documents.
 While it is overall an excellent tool, I've found it lacking in a few ways, namely:
  * Slow rendering times when "compiling" to a PDF
